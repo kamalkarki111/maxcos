@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Maxcos</title>
+<style>
+html,body{margin:0;height:100%;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#fff;overflow:hidden}
+.logo{font-size:72px;opacity:0;animation:f .9s ease forwards .25s;line-height:1}
+.track{width:168px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin-top:52px;overflow:hidden;opacity:0;animation:f .4s ease forwards 1s}
+.bar{height:100%;width:0;background:#fff;border-radius:2px;animation:l 2.8s cubic-bezier(.4,0,.2,1) forwards 1.15s}
+@keyframes f{to{opacity:1}}@keyframes l{to{width:100%}}
+</style></head><body>
+<div class="logo" aria-hidden="true"></div>
+<div class="track"><div class="bar"></div></div>
+<script>
+setTimeout(function(){ window.location.replace('/entry'); }, 4200);
+</script>
+</body></html>
