@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Maxcos — Login</title>
+<link rel="stylesheet" href="/static/css/macos.css"/>
+<link rel="stylesheet" href="/static/css/login.css"/>
+</head>
+<body class="login-body">
+<div class="login-bg" id="login-bg"></div>
+<div class="login-top">
+  <div class="login-clock" id="login-time">{{ time }}</div>
+  <div class="login-date" id="login-date">{{ date }}</div>
+</div>
+
+<div class="login-center" id="login-main">
+  <div class="user-picker" id="user-picker"></div>
+
+  <form class="login-form" method="post" action="/login" id="login-form" autocomplete="off">
+    <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token }}"/>
+    <input type="hidden" name="user_id" id="user_id" value=""/>
+    <div class="selected-user" id="selected-user" hidden>
+      <div class="user-avatar-lg" id="sel-avatar">?</div>
+      <div class="login-name-label" id="sel-name">User</div>
+    </div>
+    <div class="password-wrap" id="password-wrap" hidden>
+      <input class="login-password" type="password" name="password" id="password" placeholder="Enter Password"/>
+      <button type="submit" class="login-go" aria-label="Sign in">→</button>
+    </div>
+    <p class="password-hint" id="hint" hidden></p>
+    <button type="submit" class="login-enter" id="login-enter" hidden>Sign In</button>
+    {% match error %}
+      {% when Some with (err) %}
+        <p class="login-error">{{ err }}</p>
+      {% when None %}
+    {% endmatch %}
+  </form>
+
+  <button type="button" class="add-user-link" id="btn-add-user">Add User…</button>
+</div>
+
+<!-- Add user sheet (Mac-like) -->
+<div class="sheet-overlay" id="add-sheet" hidden>
+  <div class="sheet">
+    <h2>Create a New User</h2>
+    <p class="sheet-sub">Anyone with access to this Mac can create an account.</p>
+    <label class="field"><span>Full name</span><input id="nu-name" placeholder="Full name"/></label>
+    <div class="field-row">
+      <label class="field"><span>Password</span><input id="nu-pass" type="password" placeholder="Password"/></label>
+      <label class="field"><span>Verify</span><input id="nu-pass2" type="password" placeholder="Verify"/></label>
+    </div>
+    <label class="field"><span>Hint</span><input id="nu-hint" placeholder="Optional password hint"/></label>
+    <div class="avatar-row">
+      <div class="color-swatches" id="nu-swatches"></div>
+      <div class="avatar-preview" id="nu-preview">?</div>
+    </div>
+    <p class="login-error" id="nu-error" hidden></p>
+    <div class="sheet-actions">
+      <button type="button" class="setup-btn ghost" id="nu-cancel">Cancel</button>
+      <button type="button" class="setup-btn primary" id="nu-create">Create User</button>
+    </div>
+  </div>
+</div>
+
+<div class="login-bottom">
+  <button type="button" class="login-action" id="btn-sleep"><span class="login-action-icon">⏻</span><span>Sleep</span></button>
+  <button type="button" class="login-action" onclick="location.href='/'"><span class="login-action-icon">↻</span><span>Restart</span></button>
+  <button type="button" class="login-action" onclick="location.href='/'"><span class="login-action-icon">⏻</span><span>Shut Down</span></button>
+</div>
+
+<script type="application/json" id="users-data">{{ users_json|safe }}</script>
+<script src="/static/js/login.js"></script>
+</body></html>

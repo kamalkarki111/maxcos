@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Welcome to Maxcos</title>
+<link rel="stylesheet" href="/static/css/macos.css"/>
+<link rel="stylesheet" href="/static/css/setup.css"/>
+</head>
+<body class="setup-body">
+<div class="setup-bg"></div>
+<div class="setup-shell">
+  <div class="setup-progress">
+    <span class="dot active" data-step="0"></span>
+    <span class="dot" data-step="1"></span>
+    <span class="dot" data-step="2"></span>
+  </div>
+
+  <!-- Step 0: Hello -->
+  <section class="setup-panel active" id="step-hello">
+    <div class="hello-mark"></div>
+    <h1>Hello</h1>
+    <p class="setup-sub">Welcome to Maxcos. Let’s set up your Mac.</p>
+    <button type="button" class="setup-btn primary" id="btn-continue-hello">Continue</button>
+  </section>
+
+  <!-- Step 1: Create account -->
+  <section class="setup-panel" id="step-account">
+    <h1>Create a Computer Account</h1>
+    <p class="setup-sub">Fill in your details to create a user account on this Mac.</p>
+    <form class="setup-form" method="post" action="/setup" id="setup-form" autocomplete="off">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+      <label class="field">
+        <span>Full name</span>
+        <input name="full_name" id="full_name" required placeholder="Your Name" autofocus/>
+      </label>
+      <label class="field">
+        <span>Account name</span>
+        <input name="account_name" id="account_name" placeholder="auto-generated from full name"/>
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>Password</span>
+          <input name="password" id="password" type="password" required placeholder="Min 8 chars, 1 number" minlength="8"/>
+        </label>
+        <label class="field">
+          <span>Verify</span>
+          <input name="password_confirm" id="password_confirm" type="password" required placeholder="Retype password" minlength="8"/>
+        </label>
+      </div>
+      <label class="field">
+        <span>Password hint</span>
+        <input name="password_hint" id="password_hint" placeholder="Optional"/>
+      </label>
+      <input type="hidden" name="avatar" id="avatar" value=""/>
+      <input type="hidden" name="color" id="color" value="#0A84FF"/>
+      <div class="avatar-row">
+        <span class="field-label">Avatar color</span>
+        <div class="color-swatches" id="swatches"></div>
+        <div class="avatar-preview" id="avatar-preview">?</div>
+      </div>
+      {% match error %}
+        {% when Some with (err) %}
+          <p class="setup-error">{{ err }}</p>
+        {% when None %}
+      {% endmatch %}
+      <div class="setup-actions">
+        <button type="button" class="setup-btn ghost" id="btn-back-account">Back</button>
+        <button type="submit" class="setup-btn primary">Continue</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Step 2: Express (visual only before submit) -->
+  <section class="setup-panel" id="step-done">
+    <div class="hello-mark small">✓</div>
+    <h1>Setting Up Your Mac…</h1>
+    <p class="setup-sub">Creating your home folder and signing you in.</p>
+  </section>
+</div>
+<script src="/static/js/setup.js"></script>
+</body></html>

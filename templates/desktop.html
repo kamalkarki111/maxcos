@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Maxcos — {{ username }}</title>
+<link rel="stylesheet" href="/static/css/macos.css"/>
+<link rel="stylesheet" href="/static/css/desktop.css"/>
+<link rel="stylesheet" href="/static/css/apps.css"/>
+</head>
+<body class="desktop-body" data-user="{{ username }}" data-user-id="{{ user_id }}">
+<div class="wallpaper wallpaper-{{ wallpaper }}" id="wallpaper"></div>
+<div class="snap-preview" id="snap-preview" hidden></div>
+<header class="menubar" id="menubar">
+  <div class="menubar-left">
+    <button class="menu-item apple-menu" id="apple-btn" aria-label="Apple menu"></button>
+    <button class="menu-item menu-app-name" id="active-app-name">Finder</button>
+    <button class="menu-item">File</button>
+    <button class="menu-item">Edit</button>
+    <button class="menu-item">View</button>
+    <button class="menu-item">Go</button>
+    <button class="menu-item">Window</button>
+    <button class="menu-item">Help</button>
+  </div>
+  <div class="menubar-right">
+    <button class="menu-item status-icon" id="mc-btn" title="Mission Control (F3)">▦</button>
+    <button class="menu-item status-icon notif-btn" id="notif-btn" title="Notification Center">🔔
+      <span class="notif-badge" id="notif-badge" hidden>0</span>
+    </button>
+    <button class="menu-item status-icon" id="cc-btn" title="Control Center">☰</button>
+    <button class="menu-item status-icon" title="Wi‑Fi">📶</button>
+    <button class="menu-item menu-clock" id="menubar-clock">{{ date }}&nbsp;&nbsp;{{ time }}</button>
+  </div>
+</header>
+
+<div class="dropdown apple-dropdown" id="apple-dropdown" hidden>
+  <button data-action="about">About This Mac</button><hr/>
+  <button data-action="settings">System Settings…</button>
+  <button data-action="appstore">App Store…</button><hr/>
+  <button data-action="mission">Mission Control</button><hr/>
+  <button data-action="switch">Switch User…</button>
+  <button data-action="logout">Log Out {{ username }}…</button>
+</div>
+
+<div class="control-center" id="control-center" hidden>
+  <div class="cc-grid">
+    <div class="cc-tile cc-wide"><strong>Wi‑Fi</strong><p class="cc-muted">Maxcos-Net</p></div>
+    <div class="cc-tile cc-wide"><label>Display</label><input type="range" min="20" max="100" value="85" id="brightness"/></div>
+  </div>
+</div>
+
+<div class="desktop-icons" id="desktop-icons"></div>
+<div class="windows-layer" id="windows-layer"></div>
+
+<div class="mission-control" id="mission-control" hidden>
+  <div class="mc-spaces" id="mc-spaces"></div>
+  <div class="mc-header">Mission Control</div>
+  <div class="mc-grid" id="mc-grid"></div>
+  <div class="mc-hint">Ctrl+←/→ switch Spaces · drag windows to a Space · Esc to close</div>
+</div>
+
+<div class="space-indicator" id="space-indicator" hidden></div>
+
+<div class="launchpad" id="launchpad" hidden>
+  <input class="launchpad-search" type="search" placeholder="Search" id="launchpad-search"/>
+  <div class="launchpad-grid" id="launchpad-grid"></div>
+</div>
+
+<div class="spotlight-overlay" id="spotlight" hidden>
+  <div class="spotlight">
+    <div class="spotlight-bar"><span>🔍</span>
+      <input type="search" id="spotlight-input" placeholder="Spotlight Search" autocomplete="off"/>
+    </div>
+    <div class="spotlight-results" id="spotlight-results"></div>
+  </div>
+</div>
+
+<div class="notif-center" id="notif-center" hidden>
+  <div class="notif-center-header">
+    <strong>Notification Center</strong>
+    <div class="notif-center-actions">
+      <button type="button" id="notif-read-all">Clear badges</button>
+      <button type="button" id="notif-clear">Clear all</button>
+    </div>
+  </div>
+  <div class="notif-center-list" id="notif-list"></div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<nav class="dock" id="dock"><div class="dock-inner" id="dock-inner"></div></nav>
+<div class="context-menu" id="context-menu" hidden></div>
+
+<div class="modal-overlay" id="about-modal" hidden>
+  <div class="about-box">
+    <div style="font-size:48px;margin-bottom:8px"></div>
+    <h2>Maxcos</h2>
+    <p>macOS Sequoia Simulator</p>
+    <p class="about-meta">Multi-user · Spaces · Window Snapping<br/>Rust SSR</p>
+    <button type="button" class="btn-primary" id="about-close">OK</button>
+  </div>
+</div>
+
+<script type="application/json" id="maxcos-data">{"username":{{ username|json|safe }},"userId":{{ user_id|json|safe }},"settings":{{ settings_json|safe }},"dockApps":{{ dock_apps_json|safe }},"desktopIcons":{{ desktop_icons_json|safe }},"allApps":{{ all_apps_json|safe }}}</script>
+<script>
+(function(){try{window.MAXCOS=JSON.parse(document.getElementById('maxcos-data').textContent)}catch(e){window.MAXCOS={username:'',userId:'',settings:{spaces:[],active_space:0},dockApps:[],desktopIcons:[],allApps:[]}}})();
+</script>
+<script src="/static/js/icons.js"></script>
+<script src="/static/js/wm.js"></script>
+<script src="/static/js/apps.js"></script>
+<script src="/static/js/desktop.js"></script>
+</body></html>
